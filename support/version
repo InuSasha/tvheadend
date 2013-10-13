@@ -19,6 +19,8 @@ else
     VER=$(head -1 $(dirname $0)/../debian/changelog | awk '{ print $2 }' | tr -d '()' | cut -d '-' -f 1)
 fi
 
+VER="${VER}+scr"
+
 # Output
 if [ -z "$FILE" ]; then
   echo $VER
