@@ -645,12 +645,12 @@ linuxdvb_satconf_ele_tune ( linuxdvb_satconf_ele_t *lse )
   //       and/or re-affirm the switch
 
   /* Disable tone (en50494 don't use tone) */
-  if (!lse->lse_en50494) {
+  tvhdebug("en50494", "matthias try - disable tone explicit");
     if (ioctl(lfe->lfe_fe_fd, FE_SET_TONE, SEC_TONE_OFF)) {
       tvherror("diseqc", "failed to disable tone");
       return -1;
     }
-  }
+
 
   /* Diseqc */  
   for (i = ls->ls_diseqc_idx; i < ARRAY_SIZE(lds); i++) {
