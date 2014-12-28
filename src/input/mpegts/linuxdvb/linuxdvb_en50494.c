@@ -31,6 +31,7 @@
 
 #include <unistd.h>
 #include <math.h>
+#include <sys/ioctl.h>
 
 #include <linux/dvb/frontend.h>
 
@@ -210,7 +211,11 @@ linuxdvb_en50494_tune
       usleep(ms*1000);
     }
 
-    /* use 18V */
+    /* deactivate tone explicit at the right position and use 18V */
+    if (ioctl(fd, FE_SET_TONE, SEC_TONE_OFF)) {
+      tvherror("diseqc", "failed to disable tone");
+      return -1;
+    }
     ret = linuxdvb_diseqc_set_volt(lsp, 1);
     if (ret) {
       tvherror("en50494", "error setting lnb voltage to 18V");
